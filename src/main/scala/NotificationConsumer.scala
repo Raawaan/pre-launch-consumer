@@ -8,7 +8,7 @@ import zio.stream.ZStream
 object NotificationConsumer {
 
   private def consume(): ZStream[Consumer, Throwable, CommittableRecord[String, Notification]] = {
-    val KAFKA_TOPIC = "notification"
+    val KAFKA_TOPIC = "subscriber-msg-million"
     Consumer
       .subscribeAnd(Subscription.topics(KAFKA_TOPIC))
       .plainStream(Serde.string, Notification.notificationSerde)

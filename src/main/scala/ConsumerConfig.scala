@@ -4,13 +4,13 @@ import zio.kafka.consumer.{Consumer, ConsumerSettings}
 
 object ConsumerConfig {
 
-  private val BOOSTRAP_SERVERS = List("localhost:9092")
+  private val BOOSTRAP_SERVERS = List("localhost:9093")
 
   val live: ZLayer[Any, Throwable, Consumer] =
     ZLayer.scoped(
       Consumer.make(
         ConsumerSettings(BOOSTRAP_SERVERS)
-          .withGroupId("streaming-kafka")
+          .withGroupId("streaming-kafka-n")
           .withOffsetRetrieval(OffsetRetrieval.Auto(AutoOffsetStrategy.Earliest))
       )
     )
