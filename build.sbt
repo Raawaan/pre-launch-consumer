@@ -25,8 +25,14 @@ version := "1.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
-
+libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1",
+  "dev.zio" %% "zio"         % "2.0.4",
+  "dev.zio" %% "zio-streams" % "2.0.4",
+  "dev.zio" %% "zio-kafka"   % "2.0.1",
+  "dev.zio" %% "zio-json"    % "0.3.0",
+  "io.d11" %% "zhttp" % "2.0.0-RC11",
+)
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
 // that sbt will go and fetch when it starts up.
