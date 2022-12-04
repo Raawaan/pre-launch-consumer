@@ -33,6 +33,7 @@ libraryDependencies ++= Seq(
   "dev.zio" %% "zio-json"    % "0.3.0",
   "io.d11" %% "zhttp" % "2.0.0-RC11",
 )
+
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
 // we're adding the scala-parser-combinators dependency to the set of dependencies
 // that sbt will go and fetch when it starts up.
