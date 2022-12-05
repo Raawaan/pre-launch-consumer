@@ -31,7 +31,8 @@ libraryDependencies ++= Seq(
   "dev.zio" %% "zio-streams" % "2.0.4",
   "dev.zio" %% "zio-kafka"   % "2.0.1",
   "dev.zio" %% "zio-json"    % "0.3.0",
-  "io.d11" %% "zhttp" % "2.0.0-RC11",
+  "dev.zio" %% "zio-http" % "0.0.3"
+//  "io.d11" %% "zhttp" % "2.0.0-RC11",
 )
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
