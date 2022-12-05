@@ -11,7 +11,7 @@ object FirebaseClient {
               method: Method = Method.POST,
               content: String,
               out: Offset): ZIO[EventLoopGroup with ChannelFactory, String, Offset] = {
-    ZClient.request(url, method, Headers("Connection", "close"), Body.fromString(content))
+    ZClient.request(url, method, Headers(("Connection", "close"),("Keep-Alive" ,"timeout=300")), Body.fromString(content))
       .tap(_ => ZIO.log(s"consumed ${out.offset}"))
       .tapError(err => ZIO.logError(s"error ${err.getMessage}"))
       .mapError(_ => "")
