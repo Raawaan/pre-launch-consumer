@@ -10,7 +10,7 @@ object ConsumerConfig {
     ZLayer.scoped(
       Consumer.make(
         ConsumerSettings(BOOSTRAP_SERVERS)
-          .withGroupId("streaming-kkkgoj3")
+          .withGroupId("streaming-kkkgo11")
           .withOffsetRetrieval(OffsetRetrieval.Auto(AutoOffsetStrategy.Earliest))
       )
     )

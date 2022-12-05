@@ -16,7 +16,7 @@ object Main extends ZIOAppDefault {
       .tap(s => ZIO.log(s"to be committed: partition ${s.offsets}"))
       .mapZIO(_.commit)
       .runDrain
-      .provide(FirebaseClient.live, ChannelFactory.auto ++ EventLoopGroup.auto())
+      .provide(FirebaseClient.live ++ ChannelFactory.auto ++ EventLoopGroup.auto())
   }
 }
 
