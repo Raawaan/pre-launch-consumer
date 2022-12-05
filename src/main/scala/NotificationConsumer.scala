@@ -1,6 +1,4 @@
-import zio.{ZIO, ZLayer}
-import zio.json._
-import zio.kafka.consumer.Consumer.{AutoOffsetStrategy, OffsetRetrieval}
+
 import zio.kafka.consumer._
 import zio.kafka.serde.Serde
 import zio.stream.ZStream
