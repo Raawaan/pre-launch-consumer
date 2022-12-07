@@ -13,18 +13,19 @@ object Main extends ZIOAppDefault {
   override def run: ZIO[Any with ZIOAppArgs, Any, Any] = {
     NotificationConsumer
       .stream
-      .grouped(1000)
-
+      .groupedWithin(10, 1.second)
       .mapZIOPar(100)(chunk => {
-        val offsetBatch = OffsetBatch(chunk.map(_.offset))
-        (chunk.mapZIO(notificationAndOffset=>  ZIO.serviceWithZIO[FirebaseClient]
-          (_.request(content = notificationAndOffset.value.toJson,
-            out = notificationAndOffset.offset))).<*(offsetBatch.commit.as(Chunk(()))).tap(_ => ZIO.log(s"to be committed: partition ${offsetBatch.offsets}")))
-      } )
-      .drain
-  }  .runDrain
-    .provide(ZClient.live,ClientConfig.default,ConnectionPool.fixed(1000),Scope.default ,FirebaseClient.live)
-
+        val not = chunk.map(_.value).toJson
+        val offsets = chunk.map(_.offset)
+        ZIO.serviceWithZIO[FirebaseClient](_.request(content = not,out=offsets))
+      }
+      ).flattenChunks
+      .aggregateAsync(Consumer.offsetBatches)
+      .tap(s => ZIO.log(s"committed ${s.offsets} "))
+      .mapZIO(_.commit)
+      .runDrain
+      .provide(ZClient.live, ClientConfig.default, ConnectionPool.dynamic(100, 10000, 1.second), Scope.default, FirebaseClient.live)
+  }
 }
 
 //NotificationConsumer

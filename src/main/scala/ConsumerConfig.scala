@@ -11,7 +11,7 @@ object ConsumerConfig {
     ZLayer.scoped(
       Consumer.make(
         ConsumerSettings(BOOSTRAP_SERVERS)
-          .withGroupId("streaming-kkk1133311444mnmnnn1nnn")
+          .withGroupId("streaming-kkkdwww111d3wwwww3wss11311444enmnmnn91n1nn1nn")
           .withOffsetRetrieval(OffsetRetrieval.Auto(AutoOffsetStrategy.Earliest))
           .withPerPartitionChunkPrefetch(0)
       )
@@ -38,6 +38,36 @@ object ConsumerConfig {
   //46:43
 
 
-  //10M
-  //12:28
-}
+  /////////10M
+  //04:04
+  //06:29
+
+  //08:48
+  //11:09
+
+  //agg 100 group
+  //15:18
+  //16:34
+
+  //18:37
+  //19:57
+
+  //21:00
+  //22:17
+
+  //35:58
+  //37:22
+
+  //39:38
+  //40:52
+  //agg 10 group
+  //23:17
+  //27:32
+
+  //28:26
+  //33:06
+
+
+  //agg 1 group
+  //43:56
+ }
