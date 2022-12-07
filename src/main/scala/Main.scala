@@ -1,9 +1,11 @@
 import zio._
 import zio.http.netty.NettyRuntime
 import zio.http.netty.client.ConnectionPool
-import zio.http.{ClientConfig, ZClient}
+import zio.http.{Client, ClientConfig, ZClient}
 import zio.json.EncoderOps
-import zio.kafka.consumer.Consumer
+import zio.kafka.consumer.EmptyOffsetBatch.commit
+import zio.kafka.consumer.{Consumer, Offset, OffsetBatch}
+import zio.prelude.{AssociativeBothCovariantOps, AssociativeBothOps}
 
 
 object Main extends ZIOAppDefault {
@@ -11,16 +13,18 @@ object Main extends ZIOAppDefault {
   override def run: ZIO[Any with ZIOAppArgs, Any, Any] = {
     NotificationConsumer
       .stream
-      .map(record => (record.value, record.offset))
-      .mapZIOPar(1000)(notificationAndOffset =>
-        FirebaseClient.request(content = notificationAndOffset._1.toJson, out = notificationAndOffset._2)
-      )
-      .aggregateAsync(Consumer.offsetBatches)
-      .tap(s => ZIO.log(s"to be committed: partition ${s.offsets}"))
-      .mapZIO(_.commit)
-      .runDrain
-      .provide(FirebaseClient.live,ZClient.live,ClientConfig.default,ConnectionPool.dynamic(1000,10000000,10.second),Scope.default )
-  }
+      .grouped(1000)
+
+      .mapZIOPar(100)(chunk => {
+        val offsetBatch = OffsetBatch(chunk.map(_.offset))
+        (chunk.mapZIO(notificationAndOffset=>  ZIO.serviceWithZIO[FirebaseClient]
+          (_.request(content = notificationAndOffset.value.toJson,
+            out = notificationAndOffset.offset))).<*(offsetBatch.commit.as(Chunk(()))).tap(_ => ZIO.log(s"to be committed: partition ${offsetBatch.offsets}")))
+      } )
+      .drain
+  }  .runDrain
+    .provide(ZClient.live,ClientConfig.default,ConnectionPool.fixed(1000),Scope.default ,FirebaseClient.live)
+
 }
 
 //NotificationConsumer
