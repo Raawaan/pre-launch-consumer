@@ -21,7 +21,6 @@ private object Notification {
 
   val notificationSerde: Serde[Any, Notification] = Serde.string.inmapM { string =>
     ZIO.fromEither(string.fromJson[Notification].left.map(errorMessage => new RuntimeException(errorMessage)))
-  } { notification => ZIO.succeed(notification.toJson)
-  }
+  } { notification => ZIO.succeed(notification.toJson)}
 
 }

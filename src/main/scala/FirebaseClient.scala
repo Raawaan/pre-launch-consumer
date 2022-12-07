@@ -8,7 +8,7 @@ case class FirebaseClient() {
   def request(url: String = "http://localhost:3000/notification",
               method: Method = Method.POST,
               content: String,
-              out: Chunk[Offset]): ZIO[Client, Throwable,Chunk[Offset]] = {
+              out: Offset): ZIO[Client, Throwable,Offset] = {
       ZClient.request(url, method, Headers.empty, Body.fromString(content))
         .tapError(err => ZIO.logError(s"error ${err.getMessage}"))
         .map(_=>out)
