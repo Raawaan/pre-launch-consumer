@@ -1,6 +1,5 @@
-import zio.{Queue, ZLayer}
+import zio.ZLayer
 import zio.kafka.consumer.Consumer.{AutoOffsetStrategy, OffsetRetrieval}
-import zio.kafka.consumer.diagnostics.{DiagnosticEvent, Diagnostics}
 import zio.kafka.consumer.{Consumer, ConsumerSettings}
 
 object ConsumerConfig {
@@ -11,7 +10,7 @@ object ConsumerConfig {
     ZLayer.scoped(
       Consumer.make(
         ConsumerSettings(BOOSTRAP_SERVERS)
-          .withGroupId("streaming-kkkdwww111d3wwwww3wss11311444enmnmnn91n1nn1nn")
+          .withGroupId("streaming-nnnnnnn")
           .withOffsetRetrieval(OffsetRetrieval.Auto(AutoOffsetStrategy.Earliest))
           .withPerPartitionChunkPrefetch(0)
       )
@@ -37,13 +36,43 @@ object ConsumerConfig {
   //45:02
   //46:43
 
+  //agg 1 500 par
+  //15:47
+  //17:58
+
+  //agg 1 100 par
+
+  //03:19
+  //06:04
+
+  //07:13
+  //09:23
+
+  //10:01
+  //12:13
+
+
+  //26:53
+  //29:20
+
+  //agg 10 group
+  //52:50
+  //53:09
+
+  //53:41
+  //54:04
+
+  //55:13
+  //55:29
+
+  //56:27
+  //56:49
+
+  //agg 100 group
+  //58:49
+  //59:00
 
   /////////10M
-  //04:04
-  //06:29
-
-  //08:48
-  //11:09
 
   //agg 100 group
   //15:18
@@ -60,6 +89,7 @@ object ConsumerConfig {
 
   //39:38
   //40:52
+
   //agg 10 group
   //23:17
   //27:32
@@ -68,6 +98,4 @@ object ConsumerConfig {
   //33:06
 
 
-  //agg 1 group
-  //43:56
  }

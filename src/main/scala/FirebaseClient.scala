@@ -1,8 +1,7 @@
 import zio._
-import zio.http.model.{Header, Headers, Method}
-import zio.http.{Body, Client, Response, ZClient}
-import zio.http.service.{ChannelFactory, EventLoopGroup}
-import zio.kafka.consumer.{Offset, OffsetBatch}
+import zio.http.model.{Headers, Method}
+import zio.http.{Body, Client, ZClient}
+import zio.kafka.consumer.Offset
 
 case class FirebaseClient() {
 

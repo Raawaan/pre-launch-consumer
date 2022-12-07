@@ -1,4 +1,3 @@
-
 import zio.kafka.consumer._
 import zio.kafka.serde.Serde
 import zio.stream.ZStream

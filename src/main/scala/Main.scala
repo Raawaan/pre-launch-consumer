@@ -1,11 +1,8 @@
 import zio._
-import zio.http.netty.NettyRuntime
 import zio.http.netty.client.ConnectionPool
-import zio.http.{Client, ClientConfig, ZClient}
+import zio.http.{ClientConfig, ZClient}
 import zio.json.EncoderOps
-import zio.kafka.consumer.EmptyOffsetBatch.commit
-import zio.kafka.consumer.{Consumer, Offset, OffsetBatch}
-import zio.prelude.{AssociativeBothCovariantOps, AssociativeBothOps}
+import zio.kafka.consumer.Consumer
 
 
 object Main extends ZIOAppDefault {
